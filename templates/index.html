@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {%  if request.session.user_name %}
+        <title>{{ request.session.user_name }}的主页</title>
+    {% else %}
+        <title>登录</title>
+    {% endif %}
+</head>
+<style>
+    body {text-align: center}
+</style>
+<body>
+    {%  if request.session.account %}
+        <h1 style="color: green">{{ request.session.user_name }}的主页</h1>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/user_detail/'">用户信息</button><br/><br/>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/user_collection/'">收藏夹</button><br/><br/>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/mh/'">盲盒一览</button><br/><br/>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/mh/mh_forum/'">盲盒论坛</button><br/><br/>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/place/'">放置盲盒</button><br/><br/>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/extract/'">抽取盲盒</button><br/><br/>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/flush/'">登出</button><br/><br/>
+    {%  else %}
+        <h1 style="color: green">登录</h1>
+        <form action="" method="post">
+        {% csrf_token %}
+            账号：<input type = "text" name = "login_account" placeholder="请输入用户名" id="login_account" /><br/>
+            密码：<input type = "password" name = "login_password" placeholder="请输入密码" id="login_password" /><br/><br/>
+            <input type = "submit" value = "登录" disabled="disabled" id="login" ><br/><br/>
+        </form>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/register/'">注册</button><br/><br/>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/retrieve_password/'">找回密码</button><br/><br/>
+        <button onclick = "window.location.href = 'http://127.0.0.1:8000/extract/'">抽取盲盒</button><br/><br/>
+    {% endif %}
+</body>
+<script>
+    const login = document.getElementById('login');
+    function judge(){
+        const login_account = document.getElementById('login_account').value;
+        const login_password = document.getElementById('login_password').value;
+        if(login_account.length > 0 && login_password.length > 0)
+        {
+            login.removeAttribute('disabled');
+        }
+        else
+        {
+            login.setAttribute('disabled', 'disabled');
+        }
+    }
+    setInterval('judge()', 500);
+    {% for msg in messages %}
+        alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+</html>

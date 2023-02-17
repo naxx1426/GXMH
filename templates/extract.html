@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽取盲盒</title>
+</head>
+<style>
+    body {text-align: center}
+</style>
+<body>
+    <h1 style="color: green">抽取盲盒</h1>
+    <form action="/mh/mh_detail/" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="way" value="extract">
+        <p style="color: green">性别：</p>
+        <input type="radio" name="select_gender" value="0" checked="true"/>所有
+        <input type="radio" name="select_gender" value="1"/>男
+        <input type="radio" name="select_gender" value="2"/>女<br />
+        <p style="color: green">学校：</p>
+        <select name="select_school">
+                <option value="0">所有</option>
+                {% for a in school %}
+                    <option value="{{a.school}}">{{ a.school }}</option>
+                {% endfor %}
+        </select><br/><br/>
+        <input type = "submit" value = "抽取">
+    </form>
+    <!--抽取盲盒-->
+    <table>
+    <h2 style="color: green">盲盒详情</h2>
+    <img src="{{ MEDIA_URL }}{{ personal_detail.cover }}">
+        <p style="color: green">姓名：</p>
+        <p style="color: black">{{ personal_detail.name }}</p>
+        <p style="color: green">性别：</p>
+        <p style="color: black">{{ personal_detail.get_gender_display }}</p>
+        <p style="color: green">年龄：</p>
+        <p style="color: black">{{ personal_detail.age }}</p>
+        <p style="color: green">学校：</p>
+        <p style="color: black">{{ personal_detail.school }}</p>
+        <p style="color: green">地区：</p>
+        <p style="color: black">{{ personal_detail.region }}</p>
+        <p style="color: green">联系方式</p>
+        <p style="color: black">{{ personal_detail.contact }}</p>
+        <p style="color: green">个人简介</p>
+        <p style="color: black">{{ personal_detail.introduction }}</p>
+        <img src="{{ MEDIA_URL }}{{ personal_detail.photo }}">
+        <p style="color: green">评论内容</p>
+        {% for a in personal_detail1 %}
+            <p style="color: green">{{ a.userinfo.name }}</p>
+            <p style="color: black">{{ a.comment }}</p>
+            {% for b in comment_comment %}
+                {% if b.post == a %}
+                    <p style="color: green;margin-left: 50px">{{ b.userinfo.name }}</p>
+                    <p style="color: black;margin-left: 50px">{{ b.comment }}</p>
+                {% endif %}
+            {% endfor %}
+            <form action = "/detail/" method="post" style="margin-left: 100px">
+                {% csrf_token %}
+                <p style="color: green">回复</p>
+                <input type = "hidden" name= "id" value="{{ personal_detail.id }}" readonly>
+                <input type = "hidden" name= "id1" value="{{ a.id }}" readonly>
+                <input type = "hidden" name= "way" value="comment_comment" readonly>
+                <textarea name = "comment" style="width: 300px;
+                height: 100px;overflow-x: hidden" ></textarea><br />
+                <input type = "submit" value = "确定发布">
+            </form>
+        {% endfor %}
+        <form action = "/detail/" method="post">
+            {% csrf_token %}
+            <p style="color: green">评论</p>
+            <input type = "hidden" name= "id" value="{{ personal_detail.id }}" readonly>
+            <input type = "hidden" name= "way" value="comment" readonly>
+            <textarea name = "comment" style="width: 300px;
+            height: 100px;overflow-x: hidden" ></textarea><br />
+            <input type = "submit" value = "确认">
+        </form>
+    </table>
+    <br/><button onclick = "window.location.href = 'http://127.0.0.1:8000/'">退出</button>
+</body>
+</html>

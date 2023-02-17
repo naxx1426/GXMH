@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邮箱验证码</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    {% for msg in messages %}
+        alert('{{ msg.message }}');
+        window.history.back(-1);
+    {% endfor %}
+</script>

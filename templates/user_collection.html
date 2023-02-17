@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收藏夹</title>
+</head>
+<style>
+    body {text-align: center}
+    table {margin: auto; border-collapse: collapse}
+    td {text-align: center; border-style: double}
+</style>
+<body>
+    <h1 style="color: green">收藏内容</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>姓名&#09</td>
+                    <td>性别&#09</td>
+                    <td>年龄&#09</td>
+                    <td>地区&#09</td>
+                    <td>联系方式&#09</td>
+                    <td>个人简介&#09</td>
+                    <td>操作&#09</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in user_collection %}
+                <tr>
+                    <td>{{ item.box.name }}&#09</td>
+                    <td>{{ item.box.get_gender_display }}&#09</td>
+                    <td>{{ item.box.age }}&#09</td>
+                    <td>{{ item.box.region }}&#09</td>
+                    <td>{{ item.box.contact }}&#09</td>
+                    <td>{{ item.box.introduction }}&#09</td>
+                    <form action="/delete/" method="post">
+                        {% csrf_token %}
+                        <td><input type="submit" value="删除">&#09</td>
+                        <input type="hidden" name="way" value="user_collection_delete">
+                        <input type="hidden" name="id" value="{{ item.box.id }}">
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <br/><button onclick = "window.location.href = 'http://127.0.0.1:8000/'">退出</button>
+</body>
+</html>

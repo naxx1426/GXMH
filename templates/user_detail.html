@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息页</title>
+</head>
+<style>
+    body {text-align: center}
+</style>
+<body>
+    <h1 style="color: green">用户信息页</h1>
+
+
+    <form action = "/user_detail/" method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p style="color: green">头像</p><br />
+        <img src="{{ MEDIA_URL }}{{ user.portrait }}">
+        <input type = "hidden" name= "way" value="portrait_change" readonly>
+        <p>
+            <input type="file" name="portrait">
+        </p>
+            <input type="submit" value="上传">
+        </p>
+    </form>
+    <!--头像-->
+
+
+
+    <p style="color: green">账号：{{ user.account }}</p>
+
+    {% if way == 'name_change' %}
+        <form action = "/user_detail/" method = "post">
+            {% csrf_token %}
+            <p style="color: green">昵称：
+                <input type = "text" name = "name"/>
+                <input type = "submit" value = "确认修改">
+            </p>
+            <input type = "hidden" name= "way" value="name_change_finish" readonly>
+        </form>
+    {% else %}
+        <form action = "/user_detail/" method = "post">
+            {% csrf_token %}
+            <p style="color: green">用户名：{{ user.user_name }}
+                <input type = "hidden" name= "way" value="name_change" readonly>
+                <input type = "submit" value = "修改">
+            </p>
+        </form>
+    {% endif %}
+
+
+
+    {% if way == 'region_change' %}
+        <form action = "/user_detail/" method = "post">
+            {% csrf_token %}
+            <p style="color: green">地区：
+               <input type = "text" name = "region"/>
+                <input type = "submit" value = "确认修改">
+                <input type = "hidden" name= "way" value="region_change_finish" readonly>
+            </p>
+        </form>
+    {% else %}
+        <form action = "/user_detail/" method = "post">
+            {% csrf_token %}
+            <p style="color: green">地区：{{ user.region }}
+            <input type = "hidden" name= "way" value="region_change" readonly>
+            <input type = "submit" value = "修改">
+            </p>
+        </form>
+    {% endif %}
+
+
+
+    <br/><button onclick = "window.location.href = 'http://127.0.0.1:8000/'">退出</button>
+    <script>
+{% if messages %}
+          {% for msg in messages %}
+                alert('{{ msg.message }}');
+          {% endfor %}
+{% endif %}
+    </script>
+</body>

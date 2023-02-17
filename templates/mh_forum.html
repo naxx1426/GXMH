@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>盲盒论坛</title>
+</head>
+<style>
+    body {text-align: center}
+</style>
+<body>
+    <h1 style="color: green">论坛盲盒</h1>
+    <p style="color: green">性别：</p>
+    <input type="radio" name="select_gender" value="0" checked/>所有
+    <input type="radio" name="select_gender" value="1"/>男
+    <input type="radio" name="select_gender" value="2"/>女<br />
+    {% for mh in page %}
+        <p style="color: green">姓名：{{ mh.name }}</p>
+        <p style="color: green">年龄：{{ mh.age }}</p>
+        <p style="color: green">地区：{{ mh.region }}</p>
+        <form action="/detail/" method="post">
+            {% csrf_token %}
+            <input type = "hidden" name = "id" value="{{ mh.id }}" readonly/>
+            <input type = "hidden" name = "way" value= "detail" readonly/>
+            <input type = "submit" value = "详细内容">
+        </form>
+    {% endfor %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if page.has_previous %}
+                <li>
+                    <a href="/?page={ page.previous_page_number }" aria-label="Previous">
+                        <span aria-hidden="true">上一页</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="disabled">
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">上一页</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% for num in page_range %}
+                {% if num == current_page %}
+                    <li class="active"><a href="/?page={ num }">{{ num }}</a></li>
+                {% else %}
+                    <li><a href="/?page={ num }">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">下一页</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <br/><button onclick = "window.location.href = 'http://127.0.0.1:8000/'">退出</button>
+<script>
+    setInterval('judge()', 500);
+</script>
+</body>
+</html>

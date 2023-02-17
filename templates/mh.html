@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>盲盒一览</title>
+</head>
+<style>
+    body {text-align: center}
+    table {margin: auto; border-collapse: collapse}
+    td {text-align: center; border-style: double}
+</style>
+<body>
+    <h1 style="color: green">盲盒一览</h1>
+        <table>
+            <thead>
+                <tr>
+                    <td>姓名</td>
+                    <td>性别</td>
+                    <td>年龄</td>
+                    <td>地区</td>
+                    <td>联系方式</td>
+                    <td>个人简介&#09</td>
+                    <td>操作&#09</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in user_list %}
+                <tr>
+                    <td>{{ item.boxdetail.name }}&#09</td>
+                    <td>{{ item.boxdetail.get_gender_display }}&#09</td>
+                    <td>{{ item.boxdetail.age }}&#09</td>
+                    <td>{{ item.boxdetail.region }}&#09</td>
+                    <td>{{ item.boxdetail.contact }}&#09</td>
+                    <td>{{ item.boxdetail.introduction }}&#09</td>
+                    <td>
+                        <form action="/user_collection/" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="收藏">&#09
+                            <input type="hidden" name="id" value="{{ item.boxdetail.id }}"><br/><br/>
+                        </form>
+                        <form action="/delete/" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="删除">&#09
+                            <input type="hidden" name="way" value="record_delete">
+                            <input type="hidden" name="id" value="{{ item.boxdetail.id }}">
+                        </form></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <br/><button onclick = "window.location.href = 'http://127.0.0.1:8000/'">退出</button>
+</body>
+</html>

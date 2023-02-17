@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<style>
+    body {text-align: center}
+</style>
+<body>
+    <h1 style="color: green">注册</h1>
+    <form method="post">
+        {% csrf_token %}
+        账号：<input type="text" name="register_account" placeholder="请输入用户名" id="register_account"/><br/>
+        邮箱：<input type="text" name="register_mailbox" placeholder="请输入邮箱" id="register_mailbox"/><br/>
+        密码：<input type="password" name="register_password" placeholder="请输入密码" id="register_password"/><br/>
+        确认密码：<input type="password" name="register_re_password" placeholder="请再一次输入密码" id="register_re_password"/><br/>
+        验证码：<input type="password" name="register_verification_code_input" placeholder="请输入验证码" id="verification_code_input"/>
+        <br/><br/><input type="submit" value="注册" disabled="disabled" id="register"><br/><br/>
+    </form>
+    <form action="/mailbox/" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="mailbox" id="mailbox"/><br/>
+        <input type="submit" value="发送验证码" disabled="disabled" id="verification_code"><br/><br/>
+    </form>
+    <button onclick = "window.location.href = 'http://127.0.0.1:8000/'">返回</button><br />
+    <script>
+        const register = document.getElementById('register');
+        const verification_code = document.getElementById('verification_code');
+        function judge()
+        {
+            var register_account = document.getElementById('register_account').value;
+            var register_password = document.getElementById('register_password').value;
+            var register_re_password = document.getElementById('register_re_password').value;
+            var register_mailbox = document.getElementById('register_mailbox').value;
+            var verification_code_input = document.getElementById('verification_code_input').value;
+            if(register_account.length > 0 && register_password.length > 0 && register_re_password.length > 0 &&
+                register_mailbox.length > 0 && verification_code_input.length > 0)
+            {
+                register.removeAttribute('disabled');
+            }
+            else
+            {
+                register.setAttribute('disabled', 'disabled');
+            }
+            if(register_mailbox.length > 0)
+            {
+                const mailbox = document.getElementById('mailbox');
+                mailbox.setAttribute('value', register_mailbox);
+                verification_code.removeAttribute('disabled');
+            }
+            else
+            {
+                verification_code.setAttribute('disabled', 'disabled');
+            }
+        }
+        setInterval('judge()', 500);
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+            window.history.back(-1);
+        {% endfor %}
+    </script>
+</body>
+</html>

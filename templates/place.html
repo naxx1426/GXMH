@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <title>放置盲盒</title>
+</head>
+<style>
+    body {text-align: center}
+</style>
+<body>
+    <h1 style="color: green">放置盲盒</h1>
+    <form action = "" method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p style="color: green">封面<br /></p>
+            {{ mh_personaldetail_form.media }}
+            {{ mh_personaldetail_form.cover }}<br />
+        姓名：{{ mh_personaldetail_form.name }}<br />
+        性别：{{ mh_personaldetail_form.gender }}<br />
+        年龄：{{ mh_personaldetail_form.age }}<br />
+        地区：{{ mh_personaldetail_form.region }}<br />
+        学校：{{ mh_personaldetail_form.school }}<br />
+        联系方式：{{ mh_personaldetail_form.contact }}<br />
+        个人简介：{{ mh_personaldetail_form.introduction }}<br />
+        <input type = "submit" value="提交">
+    </form>
+    <button onclick = "window.location.href = 'http://127.0.0.1:8000/'">退出</button>
+    {% if messages %}
+    <script>
+          {% for msg in messages %}
+                alert('{{ msg.message }}');
+                window.history.back(-1);
+            {% endfor %}
+    </script>
+    {% endif %}
+</body>
