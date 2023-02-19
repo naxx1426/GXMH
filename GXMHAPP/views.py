@@ -234,7 +234,10 @@ def extract(request):
 def mh(request):
     return render(request, 'mh.html')
 def mh_detail(request):
-    return render(request, 'user_detail.html')
+    if request.method == 'POST':
+        mh_personaldetail = models.MH_PersonalDetail.objects.get(id=request.POST.get('id'))
+        models.Comment.objects.filter(mh=mh_personaldetail)
+    return render(request, 'user_detail.html', {'mh_personaldetail': mh_personaldetail})
 def mh_forum(request):
     user = models.UserInfo.objects.get(account=request.session.get("account"))
     try:

@@ -23,7 +23,6 @@ class UserInfo(models.Model):
 class Mailbox(models.Model):
     userinfo = models.ForeignKey('UserInfo', on_delete=models.CASCADE, verbose_name='用户')
     mailbox = models.CharField(max_length=32, verbose_name='邮箱')
-
     class Meta:
         verbose_name_plural = '用户邮箱'
 

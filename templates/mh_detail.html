@@ -9,24 +9,24 @@
 </style>
 <body>
     <h1 style="color: green">盲盒详细页</h1>
-        <img src="{{ MEDIA_URL }}{{ personal_detail.cover }}">
+        <img src="{{ MEDIA_URL }}{{ mh_personaldetail.cover }}">
         <p style="color: green">姓名：</p>
-        <p style="color: black">{{ personal_detail.name }}</p>
+        <p style="color: black">{{ mh_personaldetail.name }}</p>
         <p style="color: green">性别：</p>
-        <p style="color: black">{{ personal_detail.get_gender_display }}</p>
+        <p style="color: black">{{ mh_personaldetail.get_gender_display }}</p>
         <p style="color: green">年龄：</p>
-        <p style="color: black">{{ personal_detail.age }}</p>
+        <p style="color: black">{{ mh_personaldetail.age }}</p>
         <p style="color: green">学校：</p>
-        <p style="color: black">{{ personal_detail.school }}</p>
+        <p style="color: black">{{ mh_personaldetail.school }}</p>
         <p style="color: green">地区：</p>
-        <p style="color: black">{{ personal_detail.region }}</p>
+        <p style="color: black">{{ mh_personaldetail.region }}</p>
         <p style="color: green">联系方式</p>
-        <p style="color: black">{{ personal_detail.contact }}</p>
+        <p style="color: black">{{ mh_personaldetail.contact }}</p>
         <p style="color: green">个人简介</p>
-        <p style="color: black">{{ personal_detail.introduction }}</p>
+        <p style="color: black">{{ mh_personaldetail.introduction }}</p>
         <img src="{{ MEDIA_URL }}{{ personal_detail.photo }}">
         <p style="color: green">评论内容</p>
-        {% for a in personal_detail1 %}
+        {% for comment in mh_personaldetail.comment %}
             <p style="color: green">{{ a.userinfo.name }}</p>
             <p style="color: black">{{ a.comment }}</p>
             {% for b in comment_comment %}
